@@ -6,7 +6,9 @@ std::string getHomePath() {
 	// On Windows, use USERPROFILE as the home directory
 	const char* varName = "USERPROFILE";
 
-	// First, retrieve the required buffer size
+#else 
+	const char* varName = "HOME";
+#endif
 	size_t requiredSize = 0;
 	getenv_s(&requiredSize, nullptr, 0, varName);
 
@@ -16,10 +18,5 @@ std::string getHomePath() {
 		homePath = userProfile;
 	}
 
-#else 
-	if (const char* env_p = std::getenv("HOME")) {
-		homePath = env_p;
-	}
-#endif
 	return homePath;
 }
